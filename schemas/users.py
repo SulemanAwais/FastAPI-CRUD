@@ -3,7 +3,7 @@ from uuid import UUID
 
 
 class UserRegisterSchema(BaseModel):
-    id: UUID
+    id: int
     username: str
-    password: EmailStr
-    email: str
+    password: str
+    email: EmailStr
