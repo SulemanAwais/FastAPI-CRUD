@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Authentication</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #authContainer {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #loginLink {
+            margin-top: 10px;
+            color: #007bff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="authContainer">
+        <h1>User Authentication</h1>
+
+        <form id="signupForm">
+            <label for="signupUserId">User ID:</label>
+            <input type="number" id="signupUserId" name="userId" required>
+
+            <label for="signupUsername">Username:</label>
+            <input type="text" id="signupUsername" name="username" required>
+
+            <label for="signupPassword">Password:</label>
+            <input type="password" id="signupPassword" name="password" required>
+
+            <label for="signupEmail">Email:</label>
+            <input type="email" id="signupEmail" name="email" required>
+
+            <button type="submit">Register</button>
+        </form>
+
+        <p id="loginLink">Already a user? Login</p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

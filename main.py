@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from routers import userRouter
 import models
 from database import engine, SessionLocal
+from fastapi.staticfiles import StaticFiles
+
 models.user.Base.metadata.create_all(bind=engine)
 app = FastAPI(
     title="TODO tasks manager.",
@@ -9,18 +11,19 @@ app = FastAPI(
                 "framework.",
 
 )
+app.mount(
+    "/static",
+    StaticFiles(directory="static"), name="static")
 
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run(
         "main:app",
         host="localhost",
         port=8000,
         reload=True,
     )
-
-
-
 
 app.include_router(userRouter.user_router, prefix="/user")
 
@@ -33,4 +36,3 @@ def root():
     return {
         "message": "Welcome to fastAPI crud."
     }
-

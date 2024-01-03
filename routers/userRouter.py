@@ -15,21 +15,10 @@ def get_db():
 
 
 user_router = APIRouter(
-    prefix="/register",
+    prefix="/home",
 )
 
 
-@user_router.post(
-    "/",
-    description="New here? SignUp to the app real quick and explore all the features."
-)
-def user_register(
-        user: UserRegisterSchema,
-        db: Session = Depends(get_db)
-):
-    return {
-        db_crud_user.create_user(
-            db=db,
-            user=user
-        )
-    }
+@user_router.post("/", description="New here? SignUp to the app real quick and explore all the features.")
+def signup(user: UserRegisterSchema, db: Session = Depends(get_db)):
+    return {db_crud_user.create_user(db=db, user=user)}
