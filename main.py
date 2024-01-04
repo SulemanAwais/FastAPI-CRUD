@@ -1,8 +1,12 @@
+from starlette.middleware.base import BaseHTTPMiddleware
+
+from middlewares.userAuthentication import UserAuth
 from fastapi import FastAPI
 from routers import userRouter
 import models
 from database import engine, SessionLocal
 from fastapi.staticfiles import StaticFiles
+from typing import Annotated
 
 models.user.Base.metadata.create_all(bind=engine)
 app = FastAPI(
@@ -24,7 +28,8 @@ if __name__ == "__main__":
         port=8000,
         reload=True,
     )
-
+# user_auth_middleware = UserAuth(my_str="my auth middleware")
+app.add_middleware(UserAuth)
 app.include_router(userRouter.user_router, prefix="/user")
 
 
