@@ -17,18 +17,22 @@ def get_db():
 
 user_router = APIRouter(
     prefix="/home",
-    tags=["User"]
+    tags=["User"],
+
 )
 
 
 @user_router.post("/signup",
                   description="New here? SignUp to the app real quick and explore all the features.",
                   response_model=UserSchema)
-def signup(user: UserRegisterSchema, db: Session = Depends(get_db), hashed_password: str = Depends(UserAuth)):
+def signup(
+        user: UserRegisterSchema,
+        request: Request,
+        db: Session = Depends(get_db)
+           ):
     try:
-        user.password = hashed_password
+        user.password = request.state.hashed_password
         created_user = db_crud_user.create_user(db=db, user=user)
-        print("user->", user)
         if created_user is not None:
             return created_user
     except Exception as error:
