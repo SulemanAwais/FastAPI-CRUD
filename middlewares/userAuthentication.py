@@ -1,15 +1,14 @@
 from fastapi import Request
 from starlette.middleware.base import BaseHTTPMiddleware
 
-from schemas.users import UserRegisterSchema
+from db_crud.user import get_user_with_email
 
 
 class UserAuth(BaseHTTPMiddleware):
-    def __init__(self, app):
+    def __init__(self, app,):
         super().__init__(
             app=app
         )
-        self.app = app
 
     async def dispatch(self, request: Request, call_next):
         if request.url.path == "/user/home/signup" and request.method == "POST":
@@ -26,6 +25,14 @@ class UserAuth(BaseHTTPMiddleware):
                     request.state.hashed_password = hashed_password
             except Exception as error:
                 print(" from middleware", error)
-
+        if request.url.path == "/user/home/login" and request.method == "POST":
+            try:
+                json_data = await request.json()
+                password = json_data.get("password")
+                if password:
+                    import bcrypt
+                    encoded_password = password.encode("utf-8")
+                    request.state.encoded_password = encoded_password
+            except Exception as error:
+                print(error, "\nError from middleware while login")
         return await call_next(request)
-

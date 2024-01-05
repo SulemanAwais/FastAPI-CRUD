@@ -1,7 +1,7 @@
 from starlette.middleware.base import BaseHTTPMiddleware
 
 from middlewares.userAuthentication import UserAuth
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from routers import userRouter
 import models
 from database import engine, SessionLocal
@@ -15,9 +15,9 @@ app = FastAPI(
                 "framework.",
 
 )
-app.mount(
-    "/static",
-    StaticFiles(directory="static"), name="static")
+# app.mount(
+#     "/static",
+#     StaticFiles(directory="static"), name="static")
 
 if __name__ == "__main__":
     import uvicorn

@@ -44,11 +44,22 @@ def signup(
                   description=" Already a user? login here",
                   response_model=UserSchema
                   )
-def login(user: UserGetSchema, db: Session = Depends(get_db)):
-    try:
-
-        fetched_user = db_crud_user.get_user_with_email_and_password(db=db, user=user)
-        if fetched_user is not None:
-            return fetched_user
-    except Exception as error:
-        print(error)
+def login(user: UserGetSchema,
+          request: Request,
+          db: Session = Depends(get_db)):
+        try:
+            if request.state.encoded_password:
+                fetched_user = db_crud_user.get_user_with_email(db=db, email=user.email)
+                if fetched_user is not None:
+                    import bcrypt
+                    encoded_password = request.state.encoded_password
+                    fetched_user.password = fetched_user.password.encode('utf-8')
+                    is_password_correct = bcrypt.checkpw(password=encoded_password, hashed_password=fetched_user.password)
+                    if is_password_correct:
+                        return fetched_user
+                    else:
+                        print("password not found")
+        except Exception as error:
+            print(error)
+            raise HTTPException(status_code=400, detail=error)
+        print("request.state.encoded_password not found")

@@ -4,7 +4,7 @@ from models.user import User
 
 
 def create_user(db: Session, user: UserRegisterSchema):
-    db_user = User(username=user.username, email=user.email, password=user.password,)
+    db_user = User(username=user.username, email=user.email, password=user.password, )
     try:
         db.add(db_user)
         db.commit()
@@ -19,3 +19,11 @@ def get_user_with_email_and_password(db: Session, user: UserGetSchema):
         return db.query(User).filter(User.email == user.email and user.password == user.password).first()
     except Exception as error:
         print(error)
+
+
+def get_user_with_email(db: Session, email: str):
+    try:
+        return db.query(User).filter(User.email == email).first()
+    except Exception as error:
+        print(error)
+        print("EMAIL NOT FOUND")
