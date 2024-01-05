@@ -1,7 +1,5 @@
-from fastapi import Request
+from fastapi import Request, HTTPException
 from starlette.middleware.base import BaseHTTPMiddleware
-
-from db_crud.user import get_user_with_email
 
 
 class UserAuth(BaseHTTPMiddleware):
@@ -24,7 +22,9 @@ class UserAuth(BaseHTTPMiddleware):
                     print(f"actual password is {password}, whereas hashed password is {hashed_password}\n")
                     request.state.hashed_password = hashed_password
             except Exception as error:
-                print(" from middleware", error)
+                print(error, "\nError from middleware while login")
+                raise HTTPException(status_code=400, detail=error)
+
         if request.url.path == "/user/home/login" and request.method == "POST":
             try:
                 json_data = await request.json()
@@ -35,4 +35,5 @@ class UserAuth(BaseHTTPMiddleware):
                     request.state.encoded_password = encoded_password
             except Exception as error:
                 print(error, "\nError from middleware while login")
+                raise HTTPException(status_code=400, detail=error)
         return await call_next(request)
