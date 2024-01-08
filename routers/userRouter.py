@@ -1,8 +1,5 @@
-from logger import logger
-from middlewares.userAuthenticationMiddleware import UserAuth
 from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
-
 from db_crud import user as db_crud_user
 from database import SessionLocal
 from schemas.users import UserRegisterSchema, UserSchema, UserGetSchema
@@ -31,7 +28,6 @@ def signup(
         request: Request,
         db: Session = Depends(get_db)
 ):
-    # logger.info("Signup request sent")
     try:
         user.password = request.state.hashed_password
         created_user = db_crud_user.create_user(db=db, user=user)
