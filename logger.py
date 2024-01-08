@@ -7,6 +7,7 @@ formatter = logging.Formatter(
 )
 stream_handler = logging.StreamHandler(sys.stdout)
 file_handler = logging.FileHandler('app.log')
+
 file_handler.setFormatter(formatter)
 stream_handler.setFormatter(formatter)
 logger.handlers = [file_handler, stream_handler]

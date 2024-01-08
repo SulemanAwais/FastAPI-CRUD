@@ -1,10 +1,12 @@
 from middlewares.loggingMiddleware import LoggingMiddleware
 from middlewares.userAuthenticationMiddleware import UserAuth
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from routers import userRouter
 import models
 from database import engine
 from logger import logger
+from routers.userRouter import get_db
+
 models.user.Base.metadata.create_all(bind=engine)
 app = FastAPI(
     title="TODO tasks manager.",
