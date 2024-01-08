@@ -1,5 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
+from starlette.templating import Jinja2Templates
+
 from db_crud import user as db_crud_user
 from database import SessionLocal
 from schemas.users import UserRegisterSchema, UserSchema, UserGetSchema
@@ -19,6 +21,15 @@ user_router = APIRouter(
 
 )
 
+templates = Jinja2Templates(
+    directory="static"
+)
+
+
+@user_router.post("/signup-form")
+def signup_form(request: Request):
+    return templates.TemplateResponse("signup.html", {"request": request})
+
 
 @user_router.post("/signup",
                   description="New here? SignUp to the app real quick and explore all the features.",
@@ -32,7 +43,7 @@ def signup(
         user.password = request.state.hashed_password
         created_user = db_crud_user.create_user(db=db, user=user)
         if created_user is not None:
-            return created_user
+            return templates.TemplateResponse("index.html", {"request": request, "user": "created_user"})
     except Exception as error:
         print(error)
         raise HTTPException(detail=error, status_code=400)
