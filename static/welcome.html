@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #808080; /* Grey background */
+      color: #ffffff; /* White text color */
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .welcome-container {
+      text-align: center;
+      background-color: #000000; /* Black background */
+      color: #ffffff; /* White text color */
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    a {
+      color: #ff0000; /* Red color for the username */
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+  <title>Welcome to Awesome Page!</title>
+</head>
+<body>
+  <div class="welcome-container">
+    <h1><span style="color: #ff0000;">{{username}},</span> Welcome to this Page!</h1>
+    <p>Discover a world of <strong>creativity</strong> and <strong>innovation</strong>.</p>
+    <p>Explore more <a href="#">here</a>.</p>
+  </div>
+</body>
+</html>
