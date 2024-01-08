@@ -4,7 +4,6 @@ from fastapi import FastAPI
 from routers import userRouter
 import models
 from database import engine
-from logger import logger
 
 models.user.Base.metadata.create_all(bind=engine)
 
